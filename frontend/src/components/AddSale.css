@@ -1,0 +1,87 @@
+.add-sale-container {
+    width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .sale-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .test{
+    margin-top: 15px;
+    margin-bottom: 15px;
+  }
+  
+  .sale-form input {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .sale-form button {
+    margin-top: 10px;
+    margin-bottom: 15px;
+    padding: 10px;
+    font-size: 16px;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  button {
+    margin-top: 10px;
+    margin-bottom: 15px;
+    padding: 10px;
+    font-size: 16px;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  button:hover {
+    background-color: #45a049;
+  }
+  
+  .sale-form button:hover {
+    background-color: #45a049;
+  }
+  
+  .sales-list {
+    margin-top: 20px;
+  }
+  
+  .sales-list h3 {
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+  
+  .sales-list table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .sales-list th, .sales-list td {
+    padding: 10px;
+    text-align: center;
+    border: 1px solid #ddd;
+  }
+  
+  .sales-list th {
+    background-color: #f1f1f1;
+  }
+  
+  .sales-list tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+  
