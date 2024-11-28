@@ -50,3 +50,53 @@ BEGIN
     GROUP BY p.product_name;
 END;
 $$ LANGUAGE plpgsql;
+
+
+CREATE TABLE orders (
+    order_id SERIAL PRIMARY KEY,
+    customer_id INT NOT NULL,
+    product_id INT NOT NULL,
+    price NUMERIC(10, 2) NOT NULL,
+    quantity INT NOT NULL,
+    FOREIGN KEY (customer_id) REFERENCES customers(customer_id),
+    FOREIGN KEY (product_id) REFERENCES products(product_id)
+);
+
+
+CREATE OR REPLACE FUNCTION update_orders_from_sales()
+RETURNS TRIGGER AS $$
+BEGIN
+    -- Insert a new record into the orders table
+    INSERT INTO orders (customer_id, product_id, price, quantity)
+    VALUES (
+        NEW.customer_id,
+        NEW.product_id,
+        (SELECT price FROM products WHERE product_id = NEW.product_id), -- Get price from the products table
+        NEW.quantity
+    )
+    ON CONFLICT (customer_id, product_id) DO UPDATE
+    SET quantity = orders.quantity + NEW.quantity; -- Update the quantity if the record exists
+
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+
+CREATE TRIGGER after_sales_insert
+AFTER INSERT ON sales
+FOR EACH ROW
+EXECUTE FUNCTION update_orders_from_sales();
+
+ALTER TABLE orders ADD CONSTRAINT unique_customer_product UNIQUE (customer_id, product_id);
+
+
+-- Example Testing
+
+-- Insert into sales
+INSERT INTO sales (product_id, customer_id, quantity)
+VALUES (1, 1, 5);
+
+-- Check the orders table
+SELECT * FROM orders;
+
+

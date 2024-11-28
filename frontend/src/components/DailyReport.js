@@ -17,7 +17,7 @@ function DailyReport() {
 
   return (
     <div className="daily-report-container">
-      <h2>Daily Sales Report</h2>
+      <h2>Reports</h2>
       <button onClick={fetchDailyReport}>Get Report</button>
       <div className="report-list">
         {report.map((entry, index) => (

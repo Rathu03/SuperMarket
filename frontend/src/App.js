@@ -4,6 +4,7 @@ import Products from './components/Products';
 import AddSale from './components/AddSale';
 import DailyReport from './components/DailyReport';
 import Customers from './components/Customers';
+import CustomerReport from './components/CustomerReport'
 
 function App() {
   
@@ -20,7 +21,11 @@ function App() {
         <AddSale />
         
         <Customers />
+        <div>
         <DailyReport />
+        <CustomerReport />
+        </div>
+        
       </main>
     </div>
   );

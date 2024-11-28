@@ -37,11 +37,11 @@ app.get('/products', async (req, res) => {
   app.post('/sales', async (req, res) => {
     const { product_id, customer_id, quantity } = req.body;
     try {
-      const result = await pool.query(
-        'INSERT INTO sales (product_id, customer_id, quantity) VALUES ($1, $2, $3) RETURNING sale_id',
+      await pool.query(
+        'INSERT INTO sales (product_id, customer_id, quantity) VALUES ($1, $2, $3)',
         [product_id, customer_id, quantity]
       );
-      res.json({ sale_id: result.rows[0].sale_id });
+      res.json({message:"success"});
     } catch (err) {
       console.error(err);
       res.status(500).send('Server error');
@@ -144,6 +144,27 @@ app.get('/products', async (req, res) => {
       res.status(500).send('Server error');
     }
   })
+
+  app.get('/customer-report', async (req, res) => {
+    try {
+      const result = await pool.query(`
+        SELECT 
+            customer_id,
+            product_id,
+            SUM(quantity) AS total_quantity
+        FROM 
+            orders
+        GROUP BY 
+            customer_id, product_id
+        ORDER BY 
+            customer_id, total_quantity DESC;
+      `);
+      res.json(result.rows);
+    } catch (err) {
+      console.error(err);
+      res.status(500).send('Error fetching customer report');
+    }
+  });
 
 app.listen(5000, () => {
     console.log('Server running on http://localhost:5000');
